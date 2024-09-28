@@ -1,16 +1,51 @@
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { BACKEND_API_ENDPOINT_URL_DEV } from "../utils/app.constants";
 
 export default function Signin() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const baseURL =
+    process.env.REACT_APP_BACKEND_API_ENDPOINT_URL ||
+    BACKEND_API_ENDPOINT_URL_DEV;
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(`${baseURL}signin`, {
+        email,
+        password,
+      });
+      localStorage.setItem("token", response.data.token);
+      toast.success(response.data.message);
+      navigate("/");
+    } catch (error) {
+      toast.error(`Login failed: ${error.response.data.message}`);
+    }
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-80">
         <h2 className="text-2xl font-bold mb-6 text-blue-600">Login</h2>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <input
               type="email"
               placeholder="Email"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
             />
           </div>
           <div>
@@ -18,6 +53,8 @@ export default function Signin() {
               type="password"
               placeholder="Password"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
             />
           </div>
           <button

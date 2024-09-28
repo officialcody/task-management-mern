@@ -1,15 +1,60 @@
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { BACKEND_API_ENDPOINT_URL_DEV } from "../utils/app.constants";
 
 const Signup = () => {
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const baseURL =
+    process.env.REACT_APP_BACKEND_API_ENDPOINT_URL ||
+    BACKEND_API_ENDPOINT_URL_DEV;
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (confirmPassword !== password) {
+      toast.error("Password fields doesnot match");
+      return;
+    }
+    try {
+      const response = await axios.post(`${baseURL}signup`, {
+        firstname,
+        lastname,
+        email,
+        password,
+      });
+      localStorage.setItem("token", response.data.token);
+      toast.success(response.data.message);
+      navigate("/");
+    } catch (error) {
+      toast.error(`Signup failed: ${error.response.data.message}`);
+    }
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-80">
         <h2 className="text-2xl font-bold mb-6 text-blue-600">Signup</h2>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <input
               type="text"
               placeholder="First Name"
+              value={firstname}
+              onChange={(event) => setFirstName(event.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
@@ -17,6 +62,8 @@ const Signup = () => {
             <input
               type="text"
               placeholder="Last Name"
+              value={lastname}
+              onChange={(event) => setLastName(event.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
@@ -24,6 +71,8 @@ const Signup = () => {
             <input
               type="email"
               placeholder="Email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
@@ -31,6 +80,8 @@ const Signup = () => {
             <input
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
@@ -38,6 +89,8 @@ const Signup = () => {
             <input
               type="password"
               placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(event) => setConfirmPassword(event.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
@@ -45,7 +98,7 @@ const Signup = () => {
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
           >
-            Login
+            Signup
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-gray-600">
@@ -75,7 +128,7 @@ const Signup = () => {
               />
               <path fill="none" d="M1 1h22v22H1z" />
             </svg>
-            Login with Google
+            Signup with Google
           </button>
         </div>
       </div>

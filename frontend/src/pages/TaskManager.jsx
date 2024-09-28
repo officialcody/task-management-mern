@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { getDatabase, ref, set } from "firebase/database";
+import React, { useEffect, useState } from "react";
+import { getDatabase } from "firebase/database";
 import {
   PlusIcon,
   MagnifyingGlassIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 import { app } from "../config/firebase";
 import initialTasks from "../utils/mocks/tasks.json";
 
@@ -14,6 +15,7 @@ export default function TaskManager() {
   const [tasks, setTasks] = useState(initialTasks);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("Recent");
+  const navigate = useNavigate();
 
   const handleAddTask = () => {
     // Implement add task functionality
@@ -83,6 +85,12 @@ export default function TaskManager() {
         ))}
     </div>
   );
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/signin");
+    }
+  }, []);
 
   return (
     <div className="container mx-auto p-4">

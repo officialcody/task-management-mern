@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const url = useLocation();
 
   const activeStyle =
     "inline-flex items-center bg-white text-blue-600 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0";
   const inActiveStyle =
     "inline-flex items-center bg-blue-600 text-white py-1 px-3 focus:outline-none hover:bg-white hover:text-blue-600 rounded text-base mt-4 md:mt-0";
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   return (
     <header className="text-gray-600 body-font bg-blue-600">
@@ -18,18 +25,30 @@ const Header = () => {
           </span>
         </a>
         <div className="flex w-screen justify-end gap-5">
-          <Link
-            to={"/signin"}
-            className={url.pathname === "/signin" ? activeStyle : inActiveStyle}
-          >
-            Login
-          </Link>
-          <Link
-            to={"signup"}
-            className={url.pathname === "/signup" ? activeStyle : inActiveStyle}
-          >
-            Signup
-          </Link>
+          {!isLoggedIn ? (
+            <>
+              <Link
+                to={"/signin"}
+                className={
+                  url.pathname === "/signin" ? activeStyle : inActiveStyle
+                }
+              >
+                Login
+              </Link>
+              <Link
+                to={"signup"}
+                className={
+                  url.pathname === "/signup" ? activeStyle : inActiveStyle
+                }
+              >
+                Signup
+              </Link>
+            </>
+          ) : (
+            <Link className="inline-flex items-center bg-red-500 text-white border-0 py-1 px-3 focus:outline-none hover:bg-red-400 rounded text-base mt-4 md:mt-0">
+              Signout
+            </Link>
+          )}
         </div>
       </div>
     </header>
