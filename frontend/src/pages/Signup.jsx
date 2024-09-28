@@ -104,9 +104,9 @@ const Signup = () => {
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-gray-600">
-          Don't have an account?{" "}
-          <Link className="text-blue-500 hover:underline" to={"/signup"}>
-            Signup
+          Already have an account?{" "}
+          <Link className="text-blue-500 hover:underline" to={"/signin"}>
+            Signin
           </Link>
         </p>
         <div className="mt-4">
