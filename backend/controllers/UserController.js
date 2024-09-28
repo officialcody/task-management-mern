@@ -33,7 +33,7 @@ router.post("/signup", async function (req, res) {
     expiresIn: "1h",
   });
 
-  res.status(201).json({ token });
+  res.status(201).json({ token, message: "Signup Successful" });
 });
 
 // Login Route
@@ -68,7 +68,7 @@ router.post("/signin", async function (req, res) {
     expiresIn: "1h",
   });
 
-  res.json({ token });
+  res.status(200).json({ token, message: "Login Successful" });
 });
 
 module.exports = router;
