@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { BACKEND_API_ENDPOINT_URL_DEV } from "../utils/app.constants";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Signin() {
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ export default function Signin() {
         email,
         password,
       });
-      localStorage.setItem("token", response.data.token);
+      login(response.data.token);
       toast.success(response.data.message);
       navigate("/");
     } catch (error) {

@@ -9,6 +9,7 @@ import TaskManager from "./pages/TaskManager";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import MainLayout from "./layouts/MainLayout";
+import { AuthProvider } from "./context/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,9 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
     <ToastContainer />
   </StrictMode>
 );

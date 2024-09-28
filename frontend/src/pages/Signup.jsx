@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { BACKEND_API_ENDPOINT_URL_DEV } from "../utils/app.constants";
+import { AuthContext } from "../context/AuthContext";
 
 const Signup = () => {
+  const { login } = useContext(AuthContext);
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,7 +32,7 @@ const Signup = () => {
         email,
         password,
       });
-      localStorage.setItem("token", response.data.token);
+      login(response.data.token);
       toast.success(response.data.message);
       navigate("/");
     } catch (error) {
