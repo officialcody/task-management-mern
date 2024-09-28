@@ -1,23 +1,31 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import "./index.css";
 import TaskManager from "./pages/TaskManager";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import MainLayout from "./layouts/MainLayout";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <TaskManager />,
-  },
-  {
-    path: "/login",
-    element: <Signin />,
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
+        element: <TaskManager />,
+      },
+      {
+        path: "/signin",
+        element: <Signin />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+    ],
   },
 ]);
 
