@@ -6,7 +6,6 @@ const router = express.Router();
 
 // Signup Route
 router.post("/signup", async function (req, res) {
-  console.log(req.body);
   const { firstname, lastname, email, password } = req.body;
 
   // Validation

@@ -1,8 +1,10 @@
 const authMiddleware = require("../middleware/authMiddleware");
 const Task = require("../models/Task");
 const express = require("express");
+const cors = require("cors");
 
 const router = express.Router();
+router.use(cors());
 router.use(authMiddleware);
 
 // Get Tasks
@@ -19,14 +21,13 @@ router.get("/tasks", async (req, res) => {
 router.post("/tasks", async (req, res) => {
   try {
     const { title, description, status } = req.body;
-    const newTask = new Task({
+    Task.create({
       title,
       description,
       user: req.user.id,
       status,
     });
-    const savedTask = await newTask.save();
-    res.status(201).json(savedTask);
+    res.status(201).json({ message: "Task Created Successfully" });
   } catch (err) {
     res.status(500).json({ message: "Error creating task" });
   }
