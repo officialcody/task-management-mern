@@ -29,7 +29,7 @@ router.post("/signup", async function (req, res) {
   });
 
   // Generate JWT
-  const token = jwt.sign({ id: user._id }, "jwt_secret_key", {
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
     expiresIn: "1h",
   });
 
@@ -64,7 +64,7 @@ router.post("/signin", async function (req, res) {
   }
 
   // Generate JWT
-  const token = jwt.sign({ id: user._id }, "jwt_secret_key", {
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
     expiresIn: "1h",
   });
 

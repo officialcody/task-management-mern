@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const connection = require("./config/db");
 const userRouter = require("./controllers/UserController");
+const taskRouter = require("./controllers/TaskController");
 
 require("dotenv").config();
 
@@ -21,3 +22,6 @@ app.listen(port, () => {
 
 // User Routes
 app.use("/", userRouter);
+
+// Task Routes
+app.use("/", taskRouter);
