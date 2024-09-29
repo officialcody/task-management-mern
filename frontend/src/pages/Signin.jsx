@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { BACKEND_API_ENDPOINT_URL_DEV } from "../utils/app.constants";
 import { AuthContext } from "../context/AuthContext";
+import { auth, provider } from "../config/firebase";
 
 export default function Signin() {
   const { login } = useContext(AuthContext);
@@ -28,6 +30,32 @@ export default function Signin() {
     } catch (error) {
       toast.error(`Login failed: ${error.response.data.message}`);
     }
+  };
+
+  const handleSignInWithGoogle = (event) => {
+    event.preventDefault();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        console.log("token => ", token);
+        console.log("user => ", user);
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
   };
 
   useEffect(() => {
@@ -73,7 +101,10 @@ export default function Signin() {
           </Link>
         </p>
         <div className="mt-4">
-          <button className="w-full bg-white text-gray-700 py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 transition duration-300 flex items-center justify-center">
+          <button
+            className="w-full bg-white text-gray-700 py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 transition duration-300 flex items-center justify-center"
+            onClick={handleSignInWithGoogle}
+          >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
               <path
                 fill="#4285F4"
