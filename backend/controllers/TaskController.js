@@ -33,6 +33,19 @@ router.post("/tasks", async (req, res) => {
   }
 });
 
+router.get("/tasks/:id", async (req, res) => {
+  try {
+    const taskId = req.params.id;
+    const task = await Task.findById(taskId);
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+    res.json(task);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 // Update Task
 router.put("/tasks/:id", async (req, res) => {
   try {
