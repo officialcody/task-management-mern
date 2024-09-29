@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { getDatabase } from "firebase/database";
 import {
-  PlusIcon,
   MagnifyingGlassIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import { app } from "../config/firebase";
 import initialTasks from "../utils/mocks/tasks.json";
-
-const db = getDatabase(app);
+import AddTask from "../components/tasks/AddTask";
 
 export default function TaskManager() {
   const [tasks, setTasks] = useState(initialTasks);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("Recent");
-  const navigate = useNavigate();
 
-  const handleAddTask = () => {
-    // Implement add task functionality
-  };
+  const navigate = useNavigate();
 
   const handleDeleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
@@ -95,13 +88,7 @@ export default function TaskManager() {
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
-        <button
-          onClick={handleAddTask}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center hover:bg-blue-600 transition-colors"
-        >
-          <PlusIcon className="w-5 h-5 mr-2" />
-          Add Task
-        </button>
+        <AddTask />
         <div className="flex items-center space-x-4">
           <div className="relative">
             <input
