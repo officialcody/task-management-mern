@@ -20,3 +20,16 @@ export const createTask = async (data) => {
     toast.error(error.response.data.message);
   }
 };
+
+export const getAllTasks = async () => {
+  try {
+    const response = await axios.get(`${baseURL}tasks`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return response;
+  } catch (error) {
+    toast.error(error.response.data.message);
+  }
+};
