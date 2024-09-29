@@ -17,9 +17,10 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (token) => {
+  const login = (token, callback) => {
     localStorage.setItem("token", token);
     setIsAuthenticated(true);
+    callback();
   };
 
   const logout = () => {

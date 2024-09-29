@@ -22,9 +22,10 @@ export default function Signin() {
         email,
         password,
       });
-      login(response.data.token);
-      toast.success(response.data.message);
-      navigate("/");
+      login(response.data.token, () => {
+        toast.success(response.data.message);
+        navigate("/");
+      });
     } catch (error) {
       toast.error(`Login failed: ${error.response.data.message}`);
     }

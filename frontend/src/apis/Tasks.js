@@ -6,13 +6,11 @@ const baseURL =
   process.env.REACT_APP_BACKEND_API_ENDPOINT_URL ||
   BACKEND_API_ENDPOINT_URL_DEV;
 
-const token = `Bearer ${localStorage.getItem("token")}`;
-
 export const createTask = async (data) => {
   try {
     const response = await axios.post(`${baseURL}tasks`, data, {
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     toast.success(response.data.message);
@@ -25,7 +23,7 @@ export const getAllTasks = async () => {
   try {
     const response = await axios.get(`${baseURL}tasks`, {
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     return response;
