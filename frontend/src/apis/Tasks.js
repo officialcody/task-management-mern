@@ -31,3 +31,16 @@ export const getAllTasks = async () => {
     toast.error(error.response.data.message);
   }
 };
+
+export const viewTask = async (id) => {
+  try {
+    const response = await axios.get(`${baseURL}tasks/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    toast.error(error.response.data.message);
+  }
+};

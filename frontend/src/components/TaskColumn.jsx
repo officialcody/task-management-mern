@@ -1,4 +1,17 @@
+import { useState } from "react";
+import { viewTask } from "../apis/Tasks";
+import ViewTask from "./tasks/ViewTask";
+
 const TaskColumn = ({ tasks, status }) => {
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [modalData, setModalData] = useState({});
+
+  const handleViewDetails = async (id) => {
+    const response = await viewTask(id);
+    setModalData({ ...response.data });
+    setShowViewModal(true);
+  };
+
   return (
     <div className="flex-1 bg-white p-4 rounded-lg shadow-xl min-h-[500px]">
       <h2 className="text-lg font-semibold mb-4 bg-blue-500 text-white p-2 rounded">
@@ -27,7 +40,7 @@ const TaskColumn = ({ tasks, status }) => {
                 Edit
               </button>
               <button
-                // onClick={() => handleViewDetails(task._id)}
+                onClick={() => handleViewDetails(task._id)}
                 className="px-2 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-600 transition-colors"
               >
                 View Details
@@ -35,6 +48,11 @@ const TaskColumn = ({ tasks, status }) => {
             </div>
           </div>
         ))}
+      <ViewTask
+        modalData={modalData}
+        setShowViewModal={setShowViewModal}
+        showViewModal={showViewModal}
+      />
     </div>
   );
 };

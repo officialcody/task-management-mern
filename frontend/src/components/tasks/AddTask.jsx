@@ -32,6 +32,7 @@ const AddTask = () => {
         onClose={() => setShowModal(false)}
         onConfirm={handleTaskAdd}
         confirmButtonText="Save"
+        hasConfirmButton={true}
       >
         <input
           type="text"

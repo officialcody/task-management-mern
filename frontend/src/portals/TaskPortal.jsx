@@ -5,6 +5,7 @@ export default function TaskModal({
   title,
   isOpen,
   onClose,
+  hasConfirmButton,
   onConfirm,
   confirmButtonText,
 }) {
@@ -43,12 +44,14 @@ export default function TaskModal({
           >
             Cancel
           </button>
-          <button
-            className="p-2 rounded text-white bg-blue-500"
-            onClick={onConfirm}
-          >
-            {confirmButtonText}
-          </button>
+          {hasConfirmButton && (
+            <button
+              className="p-2 rounded text-white bg-blue-500"
+              onClick={onConfirm}
+            >
+              {confirmButtonText}
+            </button>
+          )}
         </div>
       </div>
     </div>,

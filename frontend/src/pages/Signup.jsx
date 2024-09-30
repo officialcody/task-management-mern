@@ -32,9 +32,10 @@ const Signup = () => {
         email,
         password,
       });
-      login(response.data.token);
-      toast.success(response.data.message);
-      navigate("/");
+      login(response.data.token, () => {
+        toast.success(response.data.message);
+        navigate("/");
+      });
     } catch (error) {
       toast.error(`Signup failed: ${error.response.data.message}`);
     }
