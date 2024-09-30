@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   MagnifyingGlassIcon,
   ChevronDownIcon,
@@ -7,11 +7,14 @@ import { useNavigate } from "react-router-dom";
 import AddTask from "../components/tasks/AddTask";
 import { getAllTasks } from "../apis/Tasks";
 import TaskColumn from "../components/TaskColumn";
+import { AuthContext } from "../context/AuthContext";
 
 export default function TaskManager() {
   const [tasks, setTasks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("Recent");
+
+  const { isAuthenticated } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -21,7 +24,7 @@ export default function TaskManager() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
+    if (!isAuthenticated) {
       navigate("/signin");
     } else {
       fetchTasks();

@@ -6,7 +6,7 @@ import { BACKEND_API_ENDPOINT_URL_DEV } from "../utils/app.constants";
 import { AuthContext } from "../context/AuthContext";
 
 const Signup = () => {
-  const { login } = useContext(AuthContext);
+  const { isAuthenticated, login } = useContext(AuthContext);
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -42,7 +42,7 @@ const Signup = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    if (isAuthenticated) {
       navigate("/");
     }
   }, []);

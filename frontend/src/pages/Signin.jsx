@@ -6,7 +6,7 @@ import { BACKEND_API_ENDPOINT_URL_DEV } from "../utils/app.constants";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Signin() {
-  const { login } = useContext(AuthContext);
+  const { isAuthenticated, login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ export default function Signin() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    if (isAuthenticated) {
       navigate("/");
     }
   }, []);
