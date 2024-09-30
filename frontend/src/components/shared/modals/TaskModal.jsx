@@ -8,6 +8,7 @@ export default function TaskModal({
   hasConfirmButton,
   onConfirm,
   confirmButtonText,
+  confirmButtonBGColor,
 }) {
   if (!isOpen) return null;
 
@@ -46,7 +47,7 @@ export default function TaskModal({
           </button>
           {hasConfirmButton && (
             <button
-              className="p-2 rounded text-white bg-blue-500"
+              className={`p-2 rounded text-white ${confirmButtonBGColor}`}
               onClick={onConfirm}
             >
               {confirmButtonText}

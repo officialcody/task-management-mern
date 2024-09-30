@@ -1,15 +1,23 @@
 import { useState } from "react";
 import { viewTask } from "../apis/Tasks";
 import ViewTask from "./tasks/ViewTask";
+import DeleteTask from "./tasks/DeleteTask";
 
 const TaskColumn = ({ tasks, status }) => {
   const [showViewModal, setShowViewModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalData, setModalData] = useState({});
 
   const handleViewDetails = async (id) => {
     const response = await viewTask(id);
     setModalData({ ...response.data });
     setShowViewModal(true);
+  };
+
+  const handleDeleteTask = async (id) => {
+    const response = await viewTask(id);
+    setModalData({ ...response.data });
+    setShowDeleteModal(true);
   };
 
   return (
@@ -28,7 +36,7 @@ const TaskColumn = ({ tasks, status }) => {
             </p>
             <div className="flex justify-end mt-2 space-x-2">
               <button
-                // onClick={() => handleDeleteTask(task._id)}
+                onClick={() => handleDeleteTask(task._id)}
                 className="px-2 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600 transition-colors"
               >
                 Delete
@@ -52,6 +60,13 @@ const TaskColumn = ({ tasks, status }) => {
         modalData={modalData}
         setShowViewModal={setShowViewModal}
         showViewModal={showViewModal}
+        setModalData={setModalData}
+      />
+      <DeleteTask
+        setShowDeleteModal={setShowDeleteModal}
+        showDeleteModal={showDeleteModal}
+        modalData={modalData}
+        setModalData={setModalData}
       />
     </div>
   );

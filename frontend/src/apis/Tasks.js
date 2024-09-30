@@ -44,3 +44,16 @@ export const viewTask = async (id) => {
     toast.error(error.response.data.message);
   }
 };
+
+export const deleteTask = async (id) => {
+  try {
+    const response = await axios.delete(`${baseURL}tasks/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    toast.error(error.response.data.message);
+  }
+};

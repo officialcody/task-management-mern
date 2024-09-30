@@ -1,12 +1,21 @@
 import React from "react";
-import TaskModal from "../../portals/TaskPortal";
+import TaskModal from "../shared/modals/TaskModal";
 
-const ViewTask = ({ modalData, showViewModal, setShowViewModal }) => {
+const ViewTask = ({
+  modalData,
+  showViewModal,
+  setShowViewModal,
+  setModalData,
+}) => {
+  const handleOnClose = () => {
+    setShowViewModal(false);
+    setModalData({});
+  };
   return (
     <TaskModal
       title={modalData.title}
       isOpen={showViewModal}
-      onClose={() => setShowViewModal(false)}
+      onClose={handleOnClose}
       hasConfirmButton={false}
     >
       <div className="w-full">Description: {modalData.description}</div>

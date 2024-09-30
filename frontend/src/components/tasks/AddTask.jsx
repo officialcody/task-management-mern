@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TaskModal from "../../portals/TaskPortal";
+import TaskModal from "../shared/modals/TaskModal";
 import { ChevronDownIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 import { TASK_STATUS } from "../../utils/app.constants";
@@ -33,6 +33,7 @@ const AddTask = () => {
         onConfirm={handleTaskAdd}
         confirmButtonText="Save"
         hasConfirmButton={true}
+        confirmButtonBGColor="bg-blue-500"
       >
         <input
           type="text"
