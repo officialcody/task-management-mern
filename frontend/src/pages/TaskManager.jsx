@@ -26,7 +26,11 @@ export default function TaskManager() {
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/signin");
-    } else {
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
       fetchTasks();
     }
   }, [tasks]);

@@ -41,7 +41,7 @@ export default function TaskModal({
         <div className="flex justify-end p-4 gap-3">
           <button
             onClick={onClose}
-            className="bg-red-500 p-2 rounded text-white"
+            className="bg-gray-500 p-2 rounded text-white"
           >
             Cancel
           </button>
